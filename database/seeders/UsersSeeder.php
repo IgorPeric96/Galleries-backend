@@ -15,6 +15,6 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+       //
     }
 }

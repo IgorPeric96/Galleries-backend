@@ -15,7 +15,7 @@ class AuthController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|confirmed|min:8|regex:/[0-9]/', //u zadatku se nije trazilo hash-ovanje tak da nisam stavljao
-            'terms' => 'accepted',
+            // 'terms' => 'accepted',
         ]);
 
         //kreiranje user-a
