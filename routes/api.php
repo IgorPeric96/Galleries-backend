@@ -17,15 +17,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/signin', [AuthController::class, 'login']);
 
+// Javne rute
+Route::get('/galleries', [GalleryController::class, 'index']);
+Route::get('/galleries/{gallery}', [GalleryController::class, 'show']);
+
+// Zasticene rute
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('/galleries', GalleryController::class);
+    Route::post('/galleries', [GalleryController::class, 'store']);
+    Route::put('/galleries/{gallery}', [GalleryController::class, 'update']);
+    Route::delete('/galleries/{gallery}', [GalleryController::class, 'destroy']);
+    Route::apiResource('/comments', CommentController::class);
 });
-
-Route::apiResource('/comments', CommentController::class)->middleware('auth:sanctum');
