@@ -7,14 +7,15 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
 
         //validacija
         $validatedData = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:8|regex:/[0-9]/', //u zadatku se nije trazilo hash-ovanje tak da nisam stavljao
+            'password' => 'required|min:8|regex:/[0-9]/', //u zadatku se nije trazilo hash-ovanje tak da nisam stavljao
             // 'terms' => 'accepted', // mora se kasnije aktivirat, zbog postmana sam iskljucio 
         ]);
 
@@ -36,14 +37,15 @@ class AuthController extends Controller
         ]);
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $validatedData = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        
+
         $user = User::where('email', $validatedData['email'])->first();
-        if($user && $validatedData['password'] === $user->password) {
+        if ($user && $validatedData['password'] === $user->password) {
             $token = $user->createToken('authToken')->plainTextToken;
 
             return response()->json([
